@@ -29,12 +29,20 @@ title <- as.vector(sapply(champs, function(x) x[["title"]]))
 info <- sapply(champs, function(x) x[["info"]])
 infoDF <- as.data.frame(info)
 t_infoDF <- as.data.frame(t(infoDF))
-t_infoDF2 <- as.data.frame(do.call(rbind, t_infoDF))
+t_infoDF$attack <- unlist(t_infoDF$attack, use.names = F)
+t_infoDF$defense <- unlist(t_infoDF$defense, use.names = F)
+t_infoDF$magic <- unlist(t_infoDF$magic, use.names = F)
+t_infoDF$difficulty <- unlist(t_infoDF$difficulty, use.names = F)
 
-
-head(do.call(rbind, t_infoDF))
-t_infoDF <- unlist(t_infoDF)
-> View(unlist(t_statsDF, use.names = F))
+# 
+# unlist(t_infoDF$attack, use.names = F)
+# 
+# #t_infoDF2 <- as.data.frame(do.call(rbind, t_infoDF))
+# 
+# 
+# head(do.call(rbind, t_infoDF))
+# t_infoDF <- unlist(t_infoDF)
+# > View(unlist(t_statsDF, use.names = F))
 
 #image
 #.....
@@ -54,9 +62,19 @@ partype <- sapply(champs, function(x) x[["partype"]])
 stats <- sapply(champs, function(x) x[["stats"]])
 statsDF <- as.data.frame(stats)
 t_statsDF <- as.data.frame(t(statsDF))
+varStats <- length(names(t_statsDF))
+for (i in 1:varStats){
+  t_statsDF[,i] <- unlist(t_statsDF[,i], use.names = F)
+  #t_infoDF$attack <- unlist(t_infoDF$attack, use.names = F)
+}
+
 
 
 allDF <- as.data.frame(cbind(name, title, t_infoDF, t_tagsDF, t_statsDF))
+
+
+
+#--------------------
 
 for (i in 1:length(allDF)){
   allDF[,i] <- as.vector(allDF[,i])
